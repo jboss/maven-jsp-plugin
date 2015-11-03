@@ -50,6 +50,10 @@ import org.apache.maven.model.Resource;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.junit.Test;
 import org.junit.runner.Result;
@@ -64,24 +68,19 @@ import org.junit.runner.notification.RunNotifier;
  * hence not executing the .jsp page, but only pre-compiling it.
  *
  * @author <a href="mailto:ales.justin@jboss.org">Ales Justin</a>
- * @goal jsp
- * @phase test-compile
- * @requiresDependencyResolution
  */
+@Mojo(name = "jsp", defaultPhase = LifecyclePhase.TEST_COMPILE, requiresDependencyResolution = ResolutionScope.RUNTIME)
 public class JspMojo extends AbstractMojo {
     /**
      * The Maven Project Object
-     *
-     * @parameter property="project"
-     * @required
      */
+    @Parameter(required = true, property = "project")
     protected MavenProject project;
 
     /**
      * Tests.
-     *
-     * @parameter
      */
+    @Parameter
     protected boolean tests = true;
 
     private static ThreadLocal<JspMojo> TL = new ThreadLocal<>();
