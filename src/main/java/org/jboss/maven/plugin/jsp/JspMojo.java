@@ -141,9 +141,9 @@ public class JspMojo extends AbstractMojo {
 
         DeploymentInfo builder = new DeploymentInfo()
             .setClassLoader(JspMojo.class.getClassLoader())
-            .setContextPath("/tck")
+            .setContextPath("/poke")
             .setClassIntrospecter(DefaultClassIntrospector.INSTANCE)
-            .setDeploymentName("tck.war")
+            .setDeploymentName("poke.war")
             .setResourceManager(new FileResourceManager(root, Integer.MAX_VALUE))
             .setTempDir(mojo.getTempDir())
             .setServletStackTraces(ServletStackTraces.NONE)
@@ -166,7 +166,7 @@ public class JspMojo extends AbstractMojo {
     protected void touchJsp(HttpClient client, String name) {
         getLog().info(String.format("Touching %s file.", name));
         try {
-            HttpGet get = new HttpGet(DefaultServer.getDefaultServerURL() + "/tck/" + name + "?jsp_precompile");
+            HttpGet get = new HttpGet(DefaultServer.getDefaultServerURL() + "/poke/" + name + "?jsp_precompile");
             client.execute(get); // just touch, so it compiles .jsp, ignore any error
         } catch (Throwable ignored) {
         }
